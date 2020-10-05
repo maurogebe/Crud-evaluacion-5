@@ -10,6 +10,7 @@ let cardsCarsModel = false
 let cardsCarsColour = false
 let cardsCarsAge = false
 let cardsCarsPrice = false
+let editingCar = ''
 
 // Agregar y quitar clases de CSS
 function changeListGroup() {
@@ -26,10 +27,11 @@ function changeListGroup() {
 // Add Car
 function formAddCar() {
     formSearch.innerHTML = ''
+    cardsCars.innerHTML = ''
     formCar.innerHTML = `<form onsubmit="event.preventDefault(), addCar()" action="/cars">
                             <div class="form-group">
                             <label for="brand">Brand</label>
-                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand">
+                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand" value="${cars[0].Marca}">
                             <label for="model">Model</label>
                             <input type="text" class="form-control mb-2" id="model" placeholder="Model">
                             <label for="colour">Colour</label>
@@ -63,29 +65,43 @@ function addCar() {
 function formEditCar(id) {
     formSearch.innerHTML = ''
     formCar.innerHTML = ''
-    const cars = cars.find((cars) => cars.id === id)
-    formCar.innerHTML = `<form onsubmit="event.preventDefault(), editCar(${cars[id].id})" action="/cars">
+    const carsEdit = cars.find((car) => car.id === id)
+    formCar.innerHTML = `<form onsubmit="event.preventDefault(), editCar(${carsEdit.id})" action="/cars">
                             <div class="form-group">
                             <label for="brand">Brand</label>
-                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand" value="${cars[id].Marca}">
+                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand" value="${carsEdit.Marca}">
                             <label for="model">Model</label>
-                            <input type="text" class="form-control mb-2" id="model" placeholder="Model" value="${cars[id].Modelo}">
+                            <input type="text" class="form-control mb-2" id="model" placeholder="Model" value="${carsEdit.Modelo}">
                             <label for="colour">Colour</label>
-                            <input type="text" class="form-control mb-2" id="colour" placeholder="Colour" value="${cars[id].Color}">
+                            <input type="text" class="form-control mb-2" id="colour" placeholder="Colour" value="${carsEdit.Color}">
                             <label for="age">Age</label>
-                            <input type="text" class="form-control mb-2" id="age" placeholder="Age" value="${cars[id].Age}">
+                            <input type="text" class="form-control mb-2" id="age" placeholder="Age" value="${carsEdit.Age}">
                             <label for="price">Price</label>
-                            <input type="text" class="form-control mb-2" id="price" placeholder="Price" value="${cars[id].Precio}">
+                            <input type="text" class="form-control mb-2" id="price" placeholder="Price" value="${carsEdit.Precio}">
                             <button type="submit" class="btn btn-primary mt-4">Edit</button>
-                        </form>`    
+                        </form>`  
+    editingCar = carsEdit 
 }
 
 function editCar(id) {
-    cars[id].Marca = document.getElementById('brand').value
-    cars[id].Modelo = document.getElementById('model').value
-    cars[id].Color = document.getElementById('colour').value
-    cars[id].Age = document.getElementById('age').value
-    cars[id].Precio = document.getElementById('price').value
+    editingCar.Marca = document.getElementById('brand').value
+    editingCar.Modelo = document.getElementById('model').value
+    editingCar.Color = document.getElementById('colour').value
+    editingCar.Age = document.getElementById('age').value
+    editingCar.Precio = document.getElementById('price').value
+    if(cardsAllCars) {
+        allCars()
+    } else if(cardsCarsBrand) {
+        carsBrand()
+    } else if(cardsCarsModel) {
+        carsModel()
+    } else if(cardsCarsColour) {
+        carsColour()
+    } else if(cardsCarsAge) {
+        carsAge()
+    } else if(cardsCarsPrice) {
+        carsPrice()
+    }
 }
 
 // Remover Carro
