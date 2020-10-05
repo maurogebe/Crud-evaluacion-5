@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="grid-body mt-5 ml-5">
+        <div class="d-flex flex-column">
+            <div class="mb-5">
+                <button onclick="formAddCar()" type="submit" class="btn btn-primary mb-4">Add Car</button>
+                <h4>Filter of search</h4>
+                <div class="form-check">
+                    <input onclick="formSearchBrand()" class="form-check-input" type="radio" name="exampleRadios" id="Brand" value="option1">
+                    <label class="form-check-label" for="Brand">
+                    Brand
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onclick="formSearchModel()" class="form-check-input" type="radio" name="exampleRadios" id="Model" value="option2">
+                    <label class="form-check-label" for="Model">
+                    Model
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onclick="formSearchColour()" class="form-check-input" type="radio" name="exampleRadios" id="Colour" value="option3">
+                    <label class="form-check-label" for="Colour">
+                    Colour
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onclick="formSearchAge()" class="form-check-input" type="radio" name="exampleRadios" id="Age" value="option4">
+                    <label class="form-check-label" for="Age">
+                    Age
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onclick="formSearchPrice()" class="form-check-input" type="radio" name="exampleRadios" id="Price" value="option5">
+                    <label class="form-check-label" for="Price">
+                    Price
+                    </label>
+                </div>
+                <a onclick="allCars()" href="#" class="btn btn-primary stretched-link">Mostrar Todos</a>
+            </div>
+
+            <div id="form-search">
+
+            </div>
+
+            <div id="form-car">
+                
+            </div>
+        </div>
+
+        
+        <div id="card-cars" class="grid ml-5">
+            
+        </div>
+    </div>
+    
+    <script type="module" src="./js/examen-4.js"></script>
+</body>
+</html>

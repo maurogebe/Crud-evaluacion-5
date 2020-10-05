@@ -1,0 +1,22 @@
+.absolute-top {
+    top: 20px;
+}
+
+.absolute-right {
+    right: 20px;
+}
+.visible {
+    visibility: visible!important;
+    cursor: pointer;
+}
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.grid-body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+.font-weight-normal {
+    font-weight: normal;
+}
