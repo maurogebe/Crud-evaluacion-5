@@ -25,3 +25,10 @@
 .font-weight-normal {
     font-weight: normal;
 }
+.height-width-input {
+    height: 26px;
+    width: 210px;
+}
+.outline-input {
+    outline: none;
+}

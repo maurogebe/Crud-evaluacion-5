@@ -147,32 +147,25 @@ function addCar() {
 
 // Editando cars
 function formEditCar(id) {
+    // alert(id)
     formSearch.innerHTML = ''
     formCar.innerHTML = ''
-    const carsEdit = cars.find((car) => car.id === id)
-    formCar.innerHTML = `<form onsubmit="event.preventDefault(), editCar(${carsEdit.id})" action="/cars">
-                            <div class="form-group">
-                            <label for="brand">Brand</label>
-                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand" value="${carsEdit.Marca}">
-                            <label for="model">Model</label>
-                            <input type="text" class="form-control mb-2" id="model" placeholder="Model" value="${carsEdit.Modelo}">
-                            <label for="colour">Colour</label>
-                            <input type="text" class="form-control mb-2" id="colour" placeholder="Colour" value="${carsEdit.Color}">
-                            <label for="age">Age</label>
-                            <input type="text" class="form-control mb-2" id="age" placeholder="Age" value="${carsEdit.Age}">
-                            <label for="price">Price</label>
-                            <input type="text" class="form-control mb-2" id="price" placeholder="Price" value="${carsEdit.Precio}">
-                            <button type="submit" class="btn btn-primary mt-4">Edit</button>
-                        </form>`  
+    document.getElementById(`brand${id}`).disabled = false
+    document.getElementById(`model${id}`).disabled = false
+    document.getElementById(`colour${id}`).disabled = false
+    document.getElementById(`age${id}`).disabled = false
+    document.getElementById(`price${id}`).disabled = false
+
+    const carsEdit = cars.find((car) => car.id === id) 
     editingCar = carsEdit 
 }
 
 function editCar(id) {
-    editingCar.Marca = document.getElementById('brand').value
-    editingCar.Modelo = document.getElementById('model').value
-    editingCar.Color = document.getElementById('colour').value
-    editingCar.Age = document.getElementById('age').value
-    editingCar.Precio = document.getElementById('price').value
+    editingCar.Marca = document.getElementById(`brand${id}`).value
+    editingCar.Modelo = document.getElementById(`model${id}`).value
+    editingCar.Color = document.getElementById(`colour${id}`).value
+    editingCar.Age = document.getElementById(`age${id}`).value
+    editingCar.Precio = document.getElementById(`price${id}`).value
     if(cardsAllCars) {
         allCars()
     } else if(cardsCarsBrand) {
@@ -307,19 +300,19 @@ function allCars() {
                                     <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                     <div class="card-body position-relative">
                                         <h5 class="card-title d-flex">Brand: 
-                                            <input type="text" class="bg-transparent border-0 pl-2" id="brand${cars.id}" value="${cars.Marca}" disabled>
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${cars.id}" value="${cars.Marca}" disabled >
                                         </h5>
                                         <h5 class="card-title d-flex">Model: 
-                                            <input type="text" class="bg-transparent border-0 pl-2" id="model${cars.id}" value="${cars.Modelo}" disabled>
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${cars.id}" value="${cars.Modelo}" disabled >
                                         </h5>
                                         <h5 class="card-title d-flex">Colour: 
-                                            <input type="text" class="bg-transparent border-0 pl-2" id="colour${cars.id}" value="${cars.Color}" disabled >
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${cars.id}" value="${cars.Color}" disabled >
                                         </h5>
                                         <h5 class="card-title d-flex">Age: 
-                                            <input type="number" class="bg-transparent border-0 pl-2" id="age${cars.id}" value=${cars.Age} disabled>
+                                            <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${cars.id}" value=${cars.Age} disabled>
                                         </h5>
                                         <h5 class="card-title d-flex">Price:
-                                            <input type="text" class="bg-transparent border-0 pl-2" id="price${cars.id}" value="$${esCurrencyFormat.format(cars.Precio)}" disabled>
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${cars.id}" value="$${esCurrencyFormat.format(cars.Precio)}" disabled>
                                         </h5>
                                         <a href="#" class="btn position-absolute absolute-top absolute-right">
                                             <span onclick="changeListGroup(${cars.id})">
@@ -359,19 +352,19 @@ function carsBrand() {
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="brand${car.id}" value="${car.Marca}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="colour${car.id}" value="${car.Color}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" id="age${car.id}" value=${car.Age} disabled>
+                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
@@ -410,19 +403,19 @@ function carsModel() {
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="brand${car.id}" value="${car.Marca}"  disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}"  disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="colour${car.id}" value="${car.Color}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" id="age${car.id}" value=${car.Age} disabled>
+                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
@@ -461,19 +454,19 @@ function carsColour() {
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="brand${car.id}" value="${car.Marca}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="colour${car.id}" value="${car.Color}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" id="age${car.id}" value=${car.Age} disabled>
+                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
@@ -513,19 +506,19 @@ function carsAge() {
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="brand${car.id}" value="${car.Marca}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="colour${car.id}" value="${car.Color}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" id="age${car.id}" value=${car.Age} disabled>
+                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
@@ -565,19 +558,19 @@ function carsPrice() {
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
                                     <h5 class="card-title d-flex">Brand:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="brand${car.id}" value="${car.Marca}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="colour${car.id}" value="${car.Color}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" id="age${car.id}" value=${car.Age} disabled>
+                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
                                     </h5>
                                     <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
