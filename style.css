@@ -10,7 +10,7 @@
     cursor: pointer;
 }
 .invisible {
-    visibility: hidden!important;
+    visibility: hidden;
 }
 .grid {
     display: grid;

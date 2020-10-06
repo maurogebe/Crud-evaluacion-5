@@ -14,20 +14,13 @@ let editingCar = ''
 
 // Agregar y quitar clases de CSS
 function changeListGroup(id) {
-    let listGroup1
-    let listGroup2
-    // alert(id)
-    // const classInvisibleId = cars.filter((car) => car.id)
-    cars.forEach((car) => {
-        listGroup1 = document.getElementById(`list-group-1-${car.id}`)
-        listGroup1.classList.toggle('invisible')
-        listGroup2 = document.getElementById(`list-group-2-${car.id}`)
-        listGroup2.classList.toggle('invisible')
-    })
-    listGroup1 = document.getElementById(`list-group-1-${id}`)
-    listGroup1.classList.toggle('visible')
-    listGroup2 = document.getElementById(`list-group-2-${id}`)
-    listGroup2.classList.toggle('visible')
+    let optionsEditRemove = ''
+    const closedMenus = document.getElementsByClassName('visible')
+    if(closedMenus.length) {
+        closedMenus[0].classList.remove('visible')
+    }
+    optionsEditRemove = document.getElementById(`options-edit-remove${id}`)
+    optionsEditRemove.classList.toggle('visible')
 }
 
 // 
@@ -41,7 +34,7 @@ function formAddCar() {
     formCar.innerHTML = `<form onsubmit="event.preventDefault(), addCar()" action="/cars">
                             <div class="form-group">
                             <label for="brand">Brand</label>
-                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand" value="${cars[0].Marca}">
+                            <input type="text" class="form-control mb-2" id="brand" placeholder="Brand">
                             <label for="model">Model</label>
                             <input type="text" class="form-control mb-2" id="model" placeholder="Model">
                             <label for="colour">Colour</label>
@@ -69,6 +62,41 @@ function addCar() {
         Precio: price
     }
     cars.push(newCar)
+    cardsCars.innerHTML =  `<div class="card mb-5" style="width: 18rem;">
+                                <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
+                                <div class="card-body position-relative">
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Marca}">
+                                    </h5>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Modelo}">
+                                    </h5>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Color}">
+                                    </h5>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${newCar.Age}>
+                                    </h5>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(newCar.Precio)}">
+                                    </h5>
+                                    <a href="#" class="btn position-absolute absolute-top absolute-right">
+                                        <span onclick="changeListGroup(${newCar.id})">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${newCar.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
+                                                    Editar
+                                                </button>
+                                                <button onclick="removeCar(${newCar.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
+                                                    Eliminar
+                                                </button>
+                                            </div>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>`
 }
 
 // Editando cars
@@ -233,31 +261,31 @@ function allCars() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -285,31 +313,31 @@ function carsBrand() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
                                         <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -336,31 +364,31 @@ function carsModel() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -387,31 +415,31 @@ function carsColour() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -439,31 +467,31 @@ function carsAge() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -491,31 +519,31 @@ function carsPrice() {
         carsDescription += `<div class="card mb-5" style="width: 18rem;">
                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
                                 <div class="card-body position-relative">
-                                    <h5 class="card-title">Brand: 
-                                        <span class="font-weight-normal">${car.Marca}</span>
+                                    <h5 class="card-title d-flex">Brand: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Marca}">
                                     </h5>
-                                    <h5 class="card-title">Model: 
-                                        <span class="font-weight-normal">${car.Modelo}</span>
+                                    <h5 class="card-title d-flex">Model: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Modelo}">
                                     </h5>
-                                    <h5 class="card-title">Colour: 
-                                        <span class="font-weight-normal">${car.Color}</span>
+                                    <h5 class="card-title d-flex">Colour: 
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${car.Color}">
                                     </h5>
-                                    <h5 class="card-title">Age: 
-                                        <span class="font-weight-normal">${car.Age}</span>
+                                    <h5 class="card-title d-flex">Age: 
+                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${car.Age}>
                                     </h5>
-                                    <h5 class="card-title">Price: 
-                                        <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
+                                    <h5 class="card-title d-flex">Price:
+                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(car.Precio)}">
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
-                                            <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
