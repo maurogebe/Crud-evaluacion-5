@@ -14,13 +14,14 @@ let editingCar = ''
 
 // Agregar y quitar clases de CSS
 function changeListGroup(id) {
-    let listGroup1 = ''
-    let listGroup2 = ''
-    const classInvisibleId = cars.filter((car) => car.id)
-    classInvisibleId.forEach((id) => {
-        listGroup1 = document.getElementById(`list-group-1-${id}`)
+    let listGroup1
+    let listGroup2
+    // alert(id)
+    // const classInvisibleId = cars.filter((car) => car.id)
+    cars.forEach((car) => {
+        listGroup1 = document.getElementById(`list-group-1-${car.id}`)
         listGroup1.classList.toggle('invisible')
-        listGroup2 = document.getElementById(`list-group-2-${id}`)
+        listGroup2 = document.getElementById(`list-group-2-${car.id}`)
         listGroup2.classList.toggle('invisible')
     })
     listGroup1 = document.getElementById(`list-group-1-${id}`)
