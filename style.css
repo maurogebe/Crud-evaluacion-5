@@ -9,6 +9,9 @@
     visibility: visible!important;
     cursor: pointer;
 }
+.invisible {
+    visibility: hidden!important;
+}
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;

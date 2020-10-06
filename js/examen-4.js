@@ -13,10 +13,19 @@ let cardsCarsPrice = false
 let editingCar = ''
 
 // Agregar y quitar clases de CSS
-function changeListGroup() {
-    var listGroup1 = document.getElementById('list-group-1')
+function changeListGroup(id) {
+    let listGroup1 = ''
+    let listGroup2 = ''
+    const classInvisibleId = cars.filter((car) => car.id)
+    classInvisibleId.forEach((id) => {
+        listGroup1 = document.getElementById(`list-group-1-${id}`)
+        listGroup1.classList.toggle('invisible')
+        listGroup2 = document.getElementById(`list-group-2-${id}`)
+        listGroup2.classList.toggle('invisible')
+    })
+    listGroup1 = document.getElementById(`list-group-1-${id}`)
     listGroup1.classList.toggle('visible')
-    var listGroup2 = document.getElementById('list-group-2')
+    listGroup2 = document.getElementById(`list-group-2-${id}`)
     listGroup2.classList.toggle('visible')
 }
 
@@ -239,15 +248,15 @@ function allCars() {
                                         <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
                                             <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                                <button onclick="formEditCar(${car.id})" id="list-group-1-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" id="list-group-2-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
@@ -291,15 +300,15 @@ function carsBrand() {
                                         <span class="font-weight-normal">$${esCurrencyFormat.format(car.Precio)}</span>
                                     </h5>
                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup()">
+                                        <span onclick="changeListGroup(${car.id})">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
                                             <div class="list-group position-absolute">
-                                                <button onclick="formEditCar(${car.id})" id="list-group-1" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
+                                                <button onclick="formEditCar(${car.id})" id="list-group-1-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-top pointer-event">
                                                     Editar
                                                 </button>
-                                                <button onclick="removeCar(${car.id})" id="list-group-2" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
+                                                <button onclick="removeCar(${car.id})" id="list-group-2-${car.id}" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active invisible rounded-bottom pointer-event">
                                                     Eliminar
                                                 </button>
                                             </div>
