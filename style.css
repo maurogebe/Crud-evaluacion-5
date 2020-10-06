@@ -5,9 +5,11 @@
 .absolute-right {
     right: 20px;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
 .visible {
     visibility: visible!important;
-    cursor: pointer;
 }
 .invisible {
     visibility: hidden;
