@@ -13,43 +13,50 @@ let cardsCarsPrice = false
 let editingCar = ''
 let idOld
 let cardCars = ''
-// const cardCarsEach = cars.forEach((cars) => {
-//     const cardCarsFinal = `<div class="card mb-5" style="width: 18rem;">
-//                                 <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
-//                                 <div class="card-body position-relative">
-//                                     <h5 class="card-title d-flex">Brand: 
-//                                         <input type="text" class="bg-transparent border-0 pl-2" id="brand${cars.id}" value="${cars.Marca}" disabled>
-//                                     </h5>
-//                                     <h5 class="card-title d-flex">Model: 
-//                                         <input type="text" class="bg-transparent border-0 pl-2" id="model${cars.id}" value="${cars.Modelo}" disabled>
-//                                     </h5>
-//                                     <h5 class="card-title d-flex">Colour: 
-//                                         <input type="text" class="bg-transparent border-0 pl-2" id="colour${cars.id}" value="${cars.Color}" disabled >
-//                                     </h5>
-//                                     <h5 class="card-title d-flex">Age: 
-//                                         <input type="number" class="bg-transparent border-0 pl-2" id="age${cars.id}" value=${cars.Age} disabled>
-//                                     </h5>
-//                                     <h5 class="card-title d-flex">Price:
-//                                         <input type="text" class="bg-transparent border-0 pl-2" id="price${cars.id}" value="$${esCurrencyFormat.format(cars.Precio)}" disabled>
-//                                     </h5>
-//                                     <a href="#" class="btn position-absolute absolute-top absolute-right">
-//                                         <span onclick="changeListGroup(${cars.id})">
-//                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-//                                             <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-//                                             </svg>
-//                                             <div id="options-edit-remove${cars.id}" class="list-group position-absolute invisible">
-//                                                 <button onclick="formEditCar(${cars.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-top cursor-pointer">
-//                                                     Editar
-//                                                 </button>
-//                                                 <button onclick="removeCar(${cars.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom cursor-pointer">
-//                                                     Eliminar
-//                                                 </button>
-//                                             </div>
-//                                         </span>
-//                                     </a>
-//                                 </div>
-//                             </div>`
-// })
+
+
+// Creando una funcion con la card universal
+function returnCard(car) {
+    let cardCarsDescription = `<div class="card mb-5" style="width: 18rem;">
+                                    <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body position-relative">
+                                        <h5 class="card-title d-flex">Brand: 
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
+                                        </h5>
+                                        <h5 class="card-title d-flex">Model: 
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
+                                        </h5>
+                                        <h5 class="card-title d-flex">Colour: 
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
+                                        </h5>
+                                        <h5 class="card-title d-flex">Age: 
+                                            <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
+                                        </h5>
+                                        <h5 class="card-title d-flex">Price:
+                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
+                                        </h5>
+                                        <a href="#" class="btn position-absolute absolute-top absolute-right">
+                                            <span onclick="changeListGroup(${car.id})">
+                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                                </svg>
+                                                <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
+                                                    <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top cursor-pointer">
+                                                        Editar
+                                                    </button>
+                                                    <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom cursor-pointer">
+                                                        Eliminar
+                                                    </button>
+                                                </div>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>`
+
+                                console.log('es')
+
+    return cardCarsDescription;
+}
 
 
 // Agregar y quitar clases de CSS
@@ -61,6 +68,7 @@ function changeListGroup(id) {
     }
     optionsEditRemove = document.getElementById(`options-edit-remove${id}`)
     optionsEditRemove.classList.toggle('visible')
+    console.log(optionsEditRemove)
     if(idOld === id) {
         closedMenus[0].classList.remove('visible')
         idOld = id - 1
@@ -183,6 +191,7 @@ function editCar(id) {
 
 // Remover Carro
 function removeCar(id) {
+    alert(id);
     const position = cars.findIndex((car) => car.id === id)
     cars.splice(position, 1)
     if(cardsAllCars) {
@@ -276,16 +285,6 @@ function formSearchPrice() {
 }
 
 
-// Condicional de busqueda
-// function searchConditional() {
-//     cars.find((car) => {
-//         if(car.Marca === ) {
-
-//         }
-//     })
-// }
-
-
 //   Mostrar todos
 function allCars() {
     cardsCars.innerHTML = ''
@@ -295,97 +294,29 @@ function allCars() {
     cardsCarsColour = false
     cardsCarsAge = false
     cardsCarsPrice = false
-    cars.forEach((cars) => {
-        cardCars += `<div class="card mb-5" style="width: 18rem;">
-                                    <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
-                                    <div class="card-body position-relative">
-                                        <h5 class="card-title d-flex">Brand: 
-                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${cars.id}" value="${cars.Marca}" disabled >
-                                        </h5>
-                                        <h5 class="card-title d-flex">Model: 
-                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${cars.id}" value="${cars.Modelo}" disabled >
-                                        </h5>
-                                        <h5 class="card-title d-flex">Colour: 
-                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${cars.id}" value="${cars.Color}" disabled >
-                                        </h5>
-                                        <h5 class="card-title d-flex">Age: 
-                                            <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${cars.id}" value=${cars.Age} disabled>
-                                        </h5>
-                                        <h5 class="card-title d-flex">Price:
-                                            <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${cars.id}" value="$${esCurrencyFormat.format(cars.Precio)}" disabled>
-                                        </h5>
-                                        <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                            <span onclick="changeListGroup(${cars.id})">
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <div id="options-edit-remove${cars.id}" class="list-group position-absolute invisible">
-                                                    <button onclick="formEditCar(${cars.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-top cursor-pointer">
-                                                        Editar
-                                                    </button>
-                                                    <button onclick="removeCar(${cars.id})" type="button" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom cursor-pointer">
-                                                        Eliminar
-                                                    </button>
-                                                </div>
-                                            </span>
-                                        </a>
-                                    </div>
-                                </div>`
+    let cardCarsFinal = ''
+    cars.forEach((car) => {
+        cardCarsFinal += returnCard(car)
     })
-    cardsCars.innerHTML = cardCars
-    
+    cardsCars.innerHTML = cardCarsFinal
 }
 
 // Mostrar filtrando Marcas
-function carsBrand() {
-    cardsCars.innerHTML = ''
-    let carsDescription = ''
-    cardsAllCars = false
-    cardsCarsBrand = true
-    cardsCarsModel = false
-    cardsCarsColour = false
-    cardsCarsAge = false
-    cardsCarsPrice = false
-    const filterCarMarca = cars.filter((car) => car.Marca.toUpperCase() === document.getElementById('brand').value.toUpperCase())
-    filterCarMarca.forEach((car) => {
-        carsDescription += `<div class="card mb-5" style="width: 18rem;">
-                                <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
-                                <div class="card-body position-relative">
-                                    <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="brand${car.id}" value="${car.Marca}" disabled>
-                                    </h5>
-                                    <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="model${car.id}" value="${car.Modelo}" disabled>
-                                    </h5>
-                                    <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="colour${car.id}" value="${car.Color}" disabled>
-                                    </h5>
-                                    <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="age${car.id}" value=${car.Age} disabled>
-                                    </h5>
-                                    <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
-                                    </h5>
-                                    <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup(${car.id})">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                            </svg>
-                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
-                                                <button onclick="formEditCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top cursor-pointer">
-                                                    Editar
-                                                </button>
-                                                <button onclick="removeCar(${car.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom cursor-pointer">
-                                                    Eliminar
-                                                </button>
-                                            </div>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>`
-    })
-    cardsCars.innerHTML = carsDescription
-}
+// function carsBrand() {
+//     cardsCars.innerHTML = ''
+//     let carsDescription = ''
+//     cardsAllCars = false
+//     cardsCarsBrand = true
+//     cardsCarsModel = false
+//     cardsCarsColour = false
+//     cardsCarsAge = false
+//     cardsCarsPrice = false
+//     const filterCarMarca = cars.filter((car) => car.Marca.toUpperCase() === document.getElementById('brand').value.toUpperCase())
+//     filterCarMarca.forEach((car) => {
+//         carsDescription += 
+//     })
+//     cardsCars.innerHTML = carsDescription
+// }
 
 // Mostrar filtrando Modelo
 function carsModel() {
