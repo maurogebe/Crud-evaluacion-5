@@ -4,15 +4,12 @@ const cardsCars = document.getElementById('card-cars')
 const formSearch = document.getElementById('form-search')
 const formCar = document.getElementById('form-car')
 const esCurrencyFormat = new Intl.NumberFormat('es-ES', {style: 'currency', currency: 'COP'})
-let cardsAllCars = false
-let cardsCarsBrand = false
-let cardsCarsModel = false
-let cardsCarsColour = false
-let cardsCarsAge = false
-let cardsCarsPrice = false
 let editingCar = ''
 let idOld
 let idEdit = false
+let booleanoCard
+let disabledFalse
+let disabledTrue
 
 
 // Creando una funcion con la card universal
@@ -60,6 +57,82 @@ function returnCard(car) {
     return cardCarsDescription;
 }
 
+// Creando una funcion con los false y true de los resultados de los buscadores
+function booleanoPrintCard() {
+    booleanoCard = [
+        {AllCars: false},
+        {CarsBrand: false},
+        {CarsModel: false},
+        {CarsColour: false},
+        {CarsAge: false},
+        {CarsPrice: false}
+    ]
+    return booleanoCard
+}
+
+function conditionalPrintCars() {
+    let returnConditionalPrintCars
+    switch(true) {
+        case booleanoCard.AllCars:
+            returnConditionalPrintCars = allCars()
+            break
+        case booleanoCard.CarsBrand:
+            returnConditionalPrintCars = carsBrand()
+            break
+        case booleanoCard.CarsModel:
+            returnConditionalPrintCars = carsModel()
+            break
+        case booleanoCard.CarsColour:
+            returnConditionalPrintCars = carsColour()
+            break
+        case booleanoCard.CarsAge:
+            returnConditionalPrintCars = carsAge()
+            break
+        case booleanoCard.CarsPrice:
+            returnConditionalPrintCars = carsPrice()
+            break
+    }
+    // 
+    // if(booleanoCard.AllCars) {
+    //     returnConditionalPrintCars = allCars()
+    // } else if(booleanoCard.CarsBrand) {
+    //     returnConditionalPrintCars = carsBrand()
+    // } else if(booleanoCard.CarsModel) {
+    //     returnConditionalPrintCars = carsModel()
+    // } else if(booleanoCard.CarsColour) {
+    //     returnConditionalPrintCars = carsColour()
+    // } else if(booleanoCard.CarsAge) {
+    //     returnConditionalPrintCars = carsAge()
+    // } else if(booleanoCard.CarsPrice) {
+    //     returnConditionalPrintCars = carsPrice()
+    // }
+    return returnConditionalPrintCars
+}
+
+
+// Agregando los disabled en dos funciones una de false y otra de true
+function inputDisabledFalse(id) {
+    disabledFalse = [
+        {Brand: document.getElementById(`brand${id}`).disabled = false},
+        {Model: document.getElementById(`model${id}`).disabled = false},
+        {Colour: document.getElementById(`colour${id}`).disabled = false},
+        {Age: document.getElementById(`age${id}`).disabled = false},
+        {Price: document.getElementById(`price${id}`).disabled = false},
+    ]
+    return disabledFalse
+}
+
+function inputDisabledTrue(id) {
+    disabledTrue = [
+    {Brand: document.getElementById(`brand${id}`).disabled = true},
+    {Model: document.getElementById(`model${id}`).disabled = true},
+    {Colour: document.getElementById(`colour${id}`).disabled = true},
+    {Age: document.getElementById(`age${id}`).disabled = true},
+    {Price: document.getElementById(`price${id}`).disabled = true},
+    ]
+    return disabledTrue
+}
+
 
 // Agregar y quitar clases de CSS
 function changeListGroup(id) {
@@ -77,10 +150,6 @@ function changeListGroup(id) {
         idOld = id
     }
 }
-
-// 
-
-
 
 // Add Car
 function formAddCar() {
@@ -128,36 +197,19 @@ function addCar() {
 // Editando cars
 function buttonEditCar(id) {
     formCar.innerHTML = ''
-    if(idEdit) {
+    if(idEdit && (idEdit != id)) {
         const idOldEdit = idEdit
-        document.getElementById(`brand${idOldEdit}`).disabled = true
-        document.getElementById(`model${idOldEdit}`).disabled = true
-        document.getElementById(`colour${idOldEdit}`).disabled = true
-        document.getElementById(`age${idOldEdit}`).disabled = true
-        document.getElementById(`price${idOldEdit}`).disabled = true
-        if(cardsAllCars) {
-            allCars()
-        } else if(cardsCarsBrand) {
-            carsBrand()
-        } else if(cardsCarsModel) {
-            carsModel()
-        } else if(cardsCarsColour) {
-            carsColour()
-        } else if(cardsCarsAge) {
-            carsAge()
-        } else if(cardsCarsPrice) {
-            carsPrice()
+        if(idOldEdit === id) {
+            inputDisabledTrue(idOldEdit)
         }
     }
+    conditionalPrintCars()
     const closedButtonConfirmEdit = document.getElementsByClassName('d-inline-block')
     if(closedButtonConfirmEdit.length) {
         closedButtonConfirmEdit[0].classList.remove('d-inline-block')
     }
-    document.getElementById(`brand${id}`).disabled = false
-    document.getElementById(`model${id}`).disabled = false
-    document.getElementById(`colour${id}`).disabled = false
-    document.getElementById(`age${id}`).disabled = false
-    document.getElementById(`price${id}`).disabled = false
+    inputDisabledFalse(id)
+
     let buttonsOptionEdit = document.getElementById(`buttonsOptionEdit${id}`)
     buttonsOptionEdit.classList.toggle('d-inline-block')
     idEdit = id
@@ -170,29 +222,16 @@ function buttonEditCar(id) {
 }
 
 function editCar(id) {
+    const number = 1000000
+    const PriceCurrency = document.getElementById(`price${id}`).value
+    const convertPriceCurrency = PriceCurrency.replace('$', '0').replace('.000.000,00', '000000').replace('COP', '')
     editingCar.Marca = document.getElementById(`brand${id}`).value
     editingCar.Modelo = document.getElementById(`model${id}`).value
     editingCar.Color = document.getElementById(`colour${id}`).value
     editingCar.Age = document.getElementById(`age${id}`).value
-    editingCar.Precio = document.getElementById(`price${id}`).value
-    if(cardsAllCars) {
-        allCars()
-    } else if(cardsCarsBrand) {
-        carsBrand()
-    } else if(cardsCarsModel) {
-        carsModel()
-    } else if(cardsCarsColour) {
-        carsColour()
-    } else if(cardsCarsAge) {
-        carsAge()
-    } else if(cardsCarsPrice) {
-        carsPrice()
-    }
-    document.getElementById(`brand${id}`).disabled = true
-    document.getElementById(`model${id}`).disabled = true
-    document.getElementById(`colour${id}`).disabled = true
-    document.getElementById(`age${id}`).disabled = true
-    document.getElementById(`price${id}`).disabled = true
+    editingCar.Precio = parseInt(esCurrencyFormat.format(convertPriceCurrency)) * number
+    conditionalPrintCars()
+    inputDisabledTrue(id)
 
     const closedButtonConfirmEdit = document.getElementsByClassName('d-inline-block')
     if(closedButtonConfirmEdit.length) {
@@ -201,47 +240,19 @@ function editCar(id) {
 }
 
 function cancelEditCar(id) {
-    document.getElementById(`brand${id}`).disabled = true
-    document.getElementById(`model${id}`).disabled = true
-    document.getElementById(`colour${id}`).disabled = true
-    document.getElementById(`age${id}`).disabled = true
-    document.getElementById(`price${id}`).disabled = true
+    inputDisabledTrue(id)
     const closedButtonCancelEdit = document.getElementsByClassName('d-inline-block')
     if(closedButtonCancelEdit.length) {
         closedButtonCancelEdit[0].classList.remove('d-inline-block')
     }
-    if(cardsAllCars) {
-        allCars()
-    } else if(cardsCarsBrand) {
-        carsBrand()
-    } else if(cardsCarsModel) {
-        carsModel()
-    } else if(cardsCarsColour) {
-        carsColour()
-    } else if(cardsCarsAge) {
-        carsAge()
-    } else if(cardsCarsPrice) {
-        carsPrice()
-    }
+    conditionalPrintCars()
 }
 
 // Remover Carro
 function removeCar(id) {
     const position = cars.findIndex((car) => car.id === id)
     cars.splice(position, 1)
-    if(cardsAllCars) {
-        allCars()
-    } else if(cardsCarsBrand) {
-        carsBrand()
-    } else if(cardsCarsModel) {
-        carsModel()
-    } else if(cardsCarsColour) {
-        carsColour()
-    } else if(cardsCarsAge) {
-        carsAge()
-    } else if(cardsCarsPrice) {
-        carsPrice()
-    }
+    conditionalPrintCars()
 }
 
 // mandando llamar los forms desde los checkbox
@@ -323,12 +334,8 @@ function formSearchPrice() {
 //   Mostrar todos
 function allCars() {
     cardsCars.innerHTML = ''
-    cardsAllCars = true
-    cardsCarsBrand = false
-    cardsCarsModel = false
-    cardsCarsColour = false
-    cardsCarsAge = false
-    cardsCarsPrice = false
+    booleanoPrintCard()
+    booleanoCard.AllCars = true
     let cardCarsFinal = ''
     cars.forEach((car) => {
         cardCarsFinal += returnCard(car)
@@ -339,12 +346,8 @@ function allCars() {
 // Mostrar filtrando Marcas
 function carsBrand() {
     cardsCars.innerHTML = ''
-    cardsAllCars = false
-    cardsCarsBrand = true
-    cardsCarsModel = false
-    cardsCarsColour = false
-    cardsCarsAge = false
-    cardsCarsPrice = false
+    booleanoPrintCard()
+    booleanoCard.CarsBrand = true
     let cardCarsFinal = ''
     const filterCarMarca = cars.filter((car) => car.Marca.toUpperCase() === document.getElementById('brand').value.toUpperCase())
     filterCarMarca.forEach((car) => {
@@ -356,12 +359,8 @@ function carsBrand() {
 // Mostrar filtrando Modelo
 function carsModel() {
     cardsCars.innerHTML = ''
-    cardsAllCars = false
-    cardsCarsBrand = false
-    cardsCarsModel = true
-    cardsCarsColour = false
-    cardsCarsAge = false
-    cardsCarsPrice = false
+    booleanoPrintCard()
+    booleanoCard.CarsModel = true
     let cardCarsFinal = ''
     const filterCarModelo = cars.filter((car) => car.Modelo.toUpperCase() === document.getElementById('model').value.toUpperCase())
     filterCarModelo.forEach((car) => {
@@ -373,12 +372,8 @@ function carsModel() {
 // Mostrar filtrando Color
 function carsColour() {
     cardsCars.innerHTML = ''
-    cardsAllCars = false
-    cardsCarsBrand = false
-    cardsCarsModel = false
-    cardsCarsColour = true
-    cardsCarsAge = false
-    cardsCarsPrice = false
+    booleanoPrintCard()
+    booleanoCard.CarsColour = true
     let cardCarsFinal = ''
     const filterCarAge = cars.filter((car) => car.Color.toUpperCase() === document.getElementById('colour').value.toUpperCase())
     filterCarAge.forEach((car) => {
@@ -391,12 +386,8 @@ function carsColour() {
 // Mostrar filtrando Age
 function carsAge() {
     cardsCars.innerHTML = ''
-    cardsAllCars = false
-    cardsCarsBrand = false
-    cardsCarsModel = false
-    cardsCarsColour = false
-    cardsCarsAge = true
-    cardsCarsPrice = false
+    booleanoPrintCard()
+    booleanoCard.CarsAge = true
     let cardCarsFinal = ''
     const filterCarAge = cars.filter((car) => car.Age >= document.getElementById('minimum-age').value && car.Age <= document.getElementById('maximum-age').value)
     filterCarAge.forEach((car) => {
@@ -409,12 +400,8 @@ function carsAge() {
 // Mostrar filtrando Age
 function carsPrice() {
     cardsCars.innerHTML = ''
-    cardsAllCars = false
-    cardsCarsBrand = false
-    cardsCarsModel = false
-    cardsCarsColour = false
-    cardsCarsAge = false
-    cardsCarsPrice = true
+    booleanoPrintCard()
+    booleanoCard.CarsPrice = true
     let cardCarsFinal = ''
     const filterCarPrice = cars.filter((car) => car.Precio >= document.getElementById('minimum-price').value && car.Precio <= document.getElementById('maximum-price').value)
     filterCarPrice.forEach((car) => {
@@ -426,6 +413,9 @@ function carsPrice() {
 
 
 
+window.booleanoPrintCard = booleanoPrintCard
+window.inputDisabledTrue = inputDisabledTrue
+window. inputDisabledFalse = inputDisabledFalse
 window.formAddCar = formAddCar
 window.addCar = addCar
 window.buttonEditCar = buttonEditCar
@@ -444,3 +434,4 @@ window.carsModel = carsModel
 window.carsColour = carsColour
 window.carsAge = carsAge
 window.carsPrice = carsPrice
+window.conditionalPrintCars = conditionalPrintCars
