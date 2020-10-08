@@ -12,7 +12,7 @@ let cardsCarsAge = false
 let cardsCarsPrice = false
 let editingCar = ''
 let idOld
-let cardCars = ''
+let idEdit = false
 
 
 // Creando una funcion con la card universal
@@ -35,6 +35,10 @@ function returnCard(car) {
                                         <h5 class="card-title d-flex">Price:
                                             <input type="text" class="bg-transparent border-0 outline-input ml-2 height-width-input" id="price${car.id}" value="$${esCurrencyFormat.format(car.Precio)}" disabled>
                                         </h5>
+                                        <div id="buttonsOptionEdit${car.id}" class="d-none">
+                                            <button onclick="editCar(${car.id})" id="buttonConfirmEdit${car.id}" type="button" class="btn btn-primary">Edit</button>
+                                            <button onclick="cancelEditCar(${car.id})" id="buttonCancelEdit${car.id}" type="button" class="btn btn-primary">Cancel</button>
+                                        </div>
                                         <a href="#" class="btn position-absolute absolute-top absolute-right">
                                             <span onclick="changeListGroup(${car.id})">
                                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -113,52 +117,54 @@ function addCar() {
         Precio: price
     }
     cars.push(newCar)
-    cardsCars.innerHTML =  `<div class="card mb-5" style="width: 18rem;">
-                                <img src="https://i.imgur.com/mAnQEPU.jpg" class="card-img-top" alt="...">
-                                <div class="card-body position-relative">
-                                    <h5 class="card-title d-flex">Brand: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Marca}">
-                                    </h5>
-                                    <h5 class="card-title d-flex">Model: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Modelo}">
-                                    </h5>
-                                    <h5 class="card-title d-flex">Colour: 
-                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="${newCar.Color}">
-                                    </h5>
-                                    <h5 class="card-title d-flex">Age: 
-                                        <input type="number" class="bg-transparent border-0 pl-2" disabled="disabled" value=${newCar.Age}>
-                                    </h5>
-                                    <h5 class="card-title d-flex">Price:
-                                        <input type="text" class="bg-transparent border-0 pl-2" disabled="disabled" value="$${esCurrencyFormat.format(newCar.Precio)}">
-                                    </h5>
-                                    <a href="#" class="btn position-absolute absolute-top absolute-right">
-                                        <span onclick="changeListGroup(${newCar.id})">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                            </svg>
-                                            <div id="options-edit-remove${car.id}" class="list-group position-absolute invisible">
-                                                <button onclick="buttonEditCar(${newCar.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-top pointer-event">
-                                                    Editar
-                                                </button>
-                                                <button onclick="removeCar(${newCar.id})" type="button" onclick="" class="list-group-item btn-outline-primary list-group-item-action active rounded-bottom pointer-event">
-                                                    Eliminar
-                                                </button>
-                                            </div>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>`
+    cars.forEach((car) =>{
+        if(car.id === newCar.id) {
+            cardsCars.innerHTML =  returnCard(car)
+        }
+    })
+    formCar.innerHTML = ''
 }
 
 // Editando cars
 function buttonEditCar(id) {
     formCar.innerHTML = ''
+    if(idEdit) {
+        const idOldEdit = idEdit
+        document.getElementById(`brand${idOldEdit}`).disabled = true
+        document.getElementById(`model${idOldEdit}`).disabled = true
+        document.getElementById(`colour${idOldEdit}`).disabled = true
+        document.getElementById(`age${idOldEdit}`).disabled = true
+        document.getElementById(`price${idOldEdit}`).disabled = true
+        if(cardsAllCars) {
+            allCars()
+        } else if(cardsCarsBrand) {
+            carsBrand()
+        } else if(cardsCarsModel) {
+            carsModel()
+        } else if(cardsCarsColour) {
+            carsColour()
+        } else if(cardsCarsAge) {
+            carsAge()
+        } else if(cardsCarsPrice) {
+            carsPrice()
+        }
+    }
+    const closedButtonConfirmEdit = document.getElementsByClassName('d-inline-block')
+    if(closedButtonConfirmEdit.length) {
+        closedButtonConfirmEdit[0].classList.remove('d-inline-block')
+    }
     document.getElementById(`brand${id}`).disabled = false
     document.getElementById(`model${id}`).disabled = false
     document.getElementById(`colour${id}`).disabled = false
     document.getElementById(`age${id}`).disabled = false
     document.getElementById(`price${id}`).disabled = false
-
+    let buttonsOptionEdit = document.getElementById(`buttonsOptionEdit${id}`)
+    buttonsOptionEdit.classList.toggle('d-inline-block')
+    idEdit = id
+    const closedMenus = document.getElementsByClassName('visible')
+    if(closedMenus.length) {
+        closedMenus[0].classList.remove('visible')
+    }
     const carsEdit = cars.find((car) => car.id === id) 
     editingCar = carsEdit 
 }
@@ -169,6 +175,41 @@ function editCar(id) {
     editingCar.Color = document.getElementById(`colour${id}`).value
     editingCar.Age = document.getElementById(`age${id}`).value
     editingCar.Precio = document.getElementById(`price${id}`).value
+    if(cardsAllCars) {
+        allCars()
+    } else if(cardsCarsBrand) {
+        carsBrand()
+    } else if(cardsCarsModel) {
+        carsModel()
+    } else if(cardsCarsColour) {
+        carsColour()
+    } else if(cardsCarsAge) {
+        carsAge()
+    } else if(cardsCarsPrice) {
+        carsPrice()
+    }
+    document.getElementById(`brand${id}`).disabled = true
+    document.getElementById(`model${id}`).disabled = true
+    document.getElementById(`colour${id}`).disabled = true
+    document.getElementById(`age${id}`).disabled = true
+    document.getElementById(`price${id}`).disabled = true
+
+    const closedButtonConfirmEdit = document.getElementsByClassName('d-inline-block')
+    if(closedButtonConfirmEdit.length) {
+        closedButtonConfirmEdit[0].classList.remove('d-inline-block')
+    }
+}
+
+function cancelEditCar(id) {
+    document.getElementById(`brand${id}`).disabled = true
+    document.getElementById(`model${id}`).disabled = true
+    document.getElementById(`colour${id}`).disabled = true
+    document.getElementById(`age${id}`).disabled = true
+    document.getElementById(`price${id}`).disabled = true
+    const closedButtonCancelEdit = document.getElementsByClassName('d-inline-block')
+    if(closedButtonCancelEdit.length) {
+        closedButtonCancelEdit[0].classList.remove('d-inline-block')
+    }
     if(cardsAllCars) {
         allCars()
     } else if(cardsCarsBrand) {
@@ -389,6 +430,7 @@ window.formAddCar = formAddCar
 window.addCar = addCar
 window.buttonEditCar = buttonEditCar
 window.editCar = editCar
+window.cancelEditCar = cancelEditCar
 window.removeCar = removeCar
 window.formSearchBrand = formSearchBrand
 window.formSearchModel = formSearchModel
